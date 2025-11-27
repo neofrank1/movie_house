@@ -8,9 +8,23 @@ import { Text } from "@/components/retroui/Text";
 import { useRouter } from "next/navigation";
 import { Loader } from "@/components/retroui/Loader";
 
+interface Movie {
+    imdbID: string;
+    Title: string;
+    Year: string;
+    Type: string;
+    Poster: string;
+}
+
+interface SearchResponse {
+    Search: Movie[];
+    totalResults: string;
+    imdbID?: string;
+}
+
 export default function MoviePage() {
-    const [movieData, setMovieData] = useState<any[]>([]);
-    const [resultCount, setResultCount] = useState<any>(null);
+    const [movieData, setMovieData] = useState<Movie[]>([]);
+    const [resultCount, setResultCount] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
     const router = useRouter();
@@ -19,19 +33,19 @@ export default function MoviePage() {
         setFailedImages(prev => new Set(prev).add(imdbID));
     };
     
-    const updateMovieData = (data: any) => {
+    const updateMovieData = (data: SearchResponse) => {
         setIsLoading(true);
         // Handle both search results (array) and single movie results
         if (data.Search && Array.isArray(data.Search)) {
             // Remove duplicates based on imdbID
-            const uniqueMovies = data.Search.filter((movie: any, index: number, self: any[]) => 
-                index === self.findIndex((m: any) => m.imdbID === movie.imdbID)
+            const uniqueMovies = data.Search.filter((movie: Movie, index: number, self: Movie[]) => 
+                index === self.findIndex((m: Movie) => m.imdbID === movie.imdbID)
             );
             setMovieData(uniqueMovies);
             setResultCount(data.totalResults);
         } else if (data.imdbID) {
             // Single movie result, convert to array
-            setMovieData([data]);
+            setMovieData([data as unknown as Movie]);
         }
         // Set loading to false after data is processed
         setTimeout(() => {
@@ -52,8 +66,10 @@ export default function MoviePage() {
         }, 500); // 500ms delay to simulate loading time
         
         // Listen for custom event when new search data is available
-        const handleMovieDataUpdate = (event: CustomEvent) => {
-            updateMovieData(event.detail);
+        const handleMovieDataUpdate = (event: Event) => {
+            if (event instanceof CustomEvent) {
+                updateMovieData(event.detail as SearchResponse);
+            }
         };
 
         window.addEventListener("movieDataUpdated", handleMovieDataUpdate as EventListener);
@@ -75,7 +91,7 @@ export default function MoviePage() {
                             <span className="inline-flex mt-6"><Loader size="lg" /></span>
                         </div>
                     ) : (
-                        movieData.slice(0, 9).map((movie: any) => (
+                        movieData.slice(0, 9).map((movie: Movie) => (
                             <div key={movie.imdbID} className="h-full">
                                 <Card className="h-full flex flex-col shadow-none hover:shadow-md">
                                     <Card.Content className="p-0">
