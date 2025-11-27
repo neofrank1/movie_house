@@ -12,10 +12,10 @@ import { Button } from "@/components/retroui/Button";
 
 export default function MovieDetails({ params }: { params: Promise<{ movieId: string }> }) {
     const { movieId } = use(params) as { movieId: string };
-    const [movieData, setMovieData] = useState<any>(null);
+    const [movieData, setMovieData] = useState<movieDetailsResponse | null>(null);
     const [imageError, setImageError] = useState<boolean>(false);
     const router = useRouter();
-    
+
     const handleImageError = () => {
         setImageError(true);
     };
@@ -29,11 +29,11 @@ export default function MovieDetails({ params }: { params: Promise<{ movieId: st
                     const result: movieDetailsResponse = await getMovieDetails(movieDetailsQuery);
                     if (!isMounted) return;
                     if (result.Response === "True") {
-                        setMovieData(result);
+                        setMovieData(result as unknown as movieDetailsResponse);
                     } else {
                         router.push("/error/not_found");
                     }
-                } catch (error) {
+                } catch (err) {
                     if (!isMounted) return;
                     router.push("/error/not_found");
                 }
@@ -67,17 +67,17 @@ export default function MovieDetails({ params }: { params: Promise<{ movieId: st
                                         <Text as="p" className="text-gray-600">Image Not Found</Text>
                                     </div>
                                 ) : (
-                                    <img 
-                                        src={movieData.Poster} 
-                                        alt={movieData.Title} 
-                                        className="w-full h-[500px] object-cover rounded-t" 
+                                    <img
+                                        src={movieData.Poster}
+                                        alt={movieData.Title}
+                                        className="w-full h-[500px] object-cover rounded-t"
                                         onError={handleImageError}
                                     />
                                 )}
                                 <div className="mt-4 flex flex-col gap-2">
                                     <Text as="h3">Ratings:</Text>
                                     <div className="flex flex-col gap-2">
-                                        {movieData.Ratings.map((rating: any) => (
+                                        {movieData.Ratings.map((rating: { Source: string; Value: string }) => (
                                             <Text as="p" key={rating.Source}>{rating.Source}: {rating.Value}</Text>
                                         ))}
                                     </div>
@@ -102,31 +102,31 @@ export default function MovieDetails({ params }: { params: Promise<{ movieId: st
                             <Text as="p" className="mb-2"><strong>Plot:</strong> {movieData.Plot}</Text>
                         </div>
                     </div>
-                  
+
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-                    <Card>
-                        <Card.Content>
-                            <Skeleton className="w-full h-[500px]" />
-                            <div className="mt-4 flex flex-col gap-2">
-                                <Skeleton className="w-full h-[40px]" />
-                                <div className="flex flex-col gap-2">
-                                    <Skeleton className="w-full h-[20px]" />
-                                    <Skeleton className="w-full h-[20px]" />
-                                    <Skeleton className="w-full h-[20px]" />
-                                    <Skeleton className="w-full h-[20px]" />
+                        <Card>
+                            <Card.Content>
+                                <Skeleton className="w-full h-[500px]" />
+                                <div className="mt-4 flex flex-col gap-2">
+                                    <Skeleton className="w-full h-[40px]" />
+                                    <div className="flex flex-col gap-2">
+                                        <Skeleton className="w-full h-[20px]" />
+                                        <Skeleton className="w-full h-[20px]" />
+                                        <Skeleton className="w-full h-[20px]" />
+                                        <Skeleton className="w-full h-[20px]" />
+                                    </div>
                                 </div>
-                            </div>
-                        </Card.Content>
-                    </Card>
-                    <div className="mt-4">
-                        <Skeleton className="w-full h-[20px] mb-2" />
-                        <Skeleton className="w-full h-[20px] mb-2" />
-                        <Skeleton className="w-full h-[20px] mb-2" />
-                        <Skeleton className="w-full h-[20px] mb-2" />
-                        <Skeleton className="w-full h-[20px] mb-2" />
+                            </Card.Content>
+                        </Card>
+                        <div className="mt-4">
+                            <Skeleton className="w-full h-[20px] mb-2" />
+                            <Skeleton className="w-full h-[20px] mb-2" />
+                            <Skeleton className="w-full h-[20px] mb-2" />
+                            <Skeleton className="w-full h-[20px] mb-2" />
+                            <Skeleton className="w-full h-[20px] mb-2" />
+                        </div>
                     </div>
-                </div>
                 )}
             </div>
         </AppLayout>
