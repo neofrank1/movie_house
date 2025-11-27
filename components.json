@@ -16,7 +16,10 @@
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
-    "hooks": "@/hooks"
+    "hooks": "@/hooks",
+    "types": "@/types"
   },
-  "registries": {}
+  "registries": {
+    "@retroui": "https://retroui.dev/r/{name}.json"
+  }
 }
