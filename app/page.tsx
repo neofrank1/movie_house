@@ -3,6 +3,7 @@
 import AppLayout from "@/components/layout/app-layout";
 import { Text } from "@/components/retroui/Text";
 import { Card } from "@/components/retroui/Card";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -38,25 +39,25 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <Card.Content>
-                <img src="https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_SX300.jpg" alt="" className="h-[450px]"/>
+                <Image src="https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_SX300.jpg" alt="" width={300} height={450} className="h-[450px]"/>
                 <Card.Title className="text-center text-pretty mt-2">The Shawshank Redemption</Card.Title>
               </Card.Content>
             </Card>
             <Card>
               <Card.Content>
-                <img src="https://m.media-amazon.com/images/M/MV5BZTA3OWVjOWItNjE1NS00NzZiLWE1MjgtZDZhMWI1ZTlkNzYwXkEyXkFqcGc@._V1_SX300.jpg" alt="" className="h-[450px]"/>
+                <Image src="https://m.media-amazon.com/images/M/MV5BZTA3OWVjOWItNjE1NS00NzZiLWE1MjgtZDZhMWI1ZTlkNzYwXkEyXkFqcGc@._V1_SX300.jpg" alt="" width={300} height={450} className="h-[450px]"/>
                 <Card.Title className="text-center text-pretty mt-2">Toy Story</Card.Title>
               </Card.Content>
             </Card>
             <Card>
               <Card.Content>
-                <img src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg" alt="" className="h-[450px]"/>
+                <Image src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg" alt="" width={300} height={450} className="h-[450px]"/>
                 <Card.Title className="text-center text-pretty mt-2">Avengers: Endgame</Card.Title>
               </Card.Content>
             </Card>
             <Card>
               <Card.Content>
-                <img src="https://m.media-amazon.com/images/M/MV5BZmM3ZjE0NzctNjBiOC00MDZmLTgzMTUtNGVlOWFlOTNiZDJiXkEyXkFqcGc@._V1_SX300.jpg" alt="" className="h-[450px]"/>
+                <Image src="https://m.media-amazon.com/images/M/MV5BZmM3ZjE0NzctNjBiOC00MDZmLTgzMTUtNGVlOWFlOTNiZDJiXkEyXkFqcGc@._V1_SX300.jpg" alt="" width={300} height={450} className="h-[450px]"/>
                 <Card.Title className="text-center text-pretty mt-2">Back to the Future</Card.Title>
               </Card.Content>
             </Card>
