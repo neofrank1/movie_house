@@ -9,6 +9,16 @@ import { Text } from "@/components/retroui/Text";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/retroui/Button";
+import Image from "next/image";
+
+const isValidUrl = (urlString: string): boolean => {
+    try {
+        new URL(urlString);
+        return true;
+    } catch {
+        return false;
+    }
+};
 
 export default function MovieDetails({ params }: { params: Promise<{ movieId: string }> }) {
     const { movieId } = use(params) as { movieId: string };
@@ -33,7 +43,7 @@ export default function MovieDetails({ params }: { params: Promise<{ movieId: st
                     } else {
                         router.push("/error/not_found");
                     }
-                } catch (err) {
+                } catch {
                     if (!isMounted) return;
                     router.push("/error/not_found");
                 }
@@ -62,15 +72,17 @@ export default function MovieDetails({ params }: { params: Promise<{ movieId: st
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                         <Card>
                             <Card.Content>
-                                {imageError ? (
+                                {imageError || !movieData.Poster || movieData.Poster === "N/A" || !isValidUrl(movieData.Poster) ? (
                                     <div className="w-full h-[500px] bg-gray-300 flex items-center justify-center rounded-t">
                                         <Text as="p" className="text-gray-600">Image Not Found</Text>
                                     </div>
                                 ) : (
-                                    <img
+                                    <Image
                                         src={movieData.Poster}
-                                        alt={movieData.Title}
-                                        className="w-full h-[500px] object-cover rounded-t"
+                                        alt={movieData.Title}   
+                                        width={300}
+                                        height={700}
+                                        className="object-cover rounded-t w-full h-[700px]"
                                         onError={handleImageError}
                                     />
                                 )}

@@ -2,6 +2,20 @@ export interface searchMovieQuery {
     s: string; // Search Title
 }
 
+export interface MoviePreview {
+    imdbID: string;
+    Title: string;
+    Year: string;
+    Type: string;
+    Poster: string;
+}
+
+export interface SearchResponse {
+    Search: MoviePreview[];
+    totalResults: string;
+    imdbID?: string;
+}
+
 export interface movieDetailsQuery {
     i: string; // Movie Title
 }

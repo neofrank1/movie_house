@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 
 import { Archivo_Black, Space_Grotesk } from "next/font/google";
+import { Toaster } from "@/components/retroui/Sonner";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
  
 const archivoBlack = Archivo_Black({
   subsets: ["latin"],
@@ -32,7 +35,10 @@ export default function RootLayout({
       <body
         className={`${archivoBlack.variable} ${space.variable} antialiased`}
       >
+        <Toaster visibleToasts={1} position="bottom-center" />
         {children}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
